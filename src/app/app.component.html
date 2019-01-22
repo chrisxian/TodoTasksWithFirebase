@@ -1,4 +1,6 @@
-<tr *ngFor="let task of tasks | async; let i = index" [attr.data-index]="i">
-  <td>{{i + 1}}</td>
-  <td>{{task.description}}</td>
-</tr>
+<div class="container">
+  <tr *ngFor="let task of tasks | async; let i = index" [attr.data-index]="i">
+    <td>{{i + 1}}</td>
+    <td>{{task.description}}</td>
+  </tr>
+</div>
