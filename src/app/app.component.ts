@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,12 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class AppComponent implements OnInit{
   
   title = 'app';
+  tasks: Observable<any[]>;
 
   constructor(private db: AngularFirestore){}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.tasks = this.db.collection('tasks').valueChanges();
+  }
 
 }
