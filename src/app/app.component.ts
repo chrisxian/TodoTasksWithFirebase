@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { config } from './app.config';
 import { Task } from './app.model';
+import { AppService } from './app.service'
 
 @Component({
   selector: 'app-root',
@@ -15,8 +16,11 @@ export class AppComponent implements OnInit{
   
   title = 'app';
   tasks: Observable<Task[]>;
+  myTask: string;
+  editMode: boolean = false;
+  taskToEdit: any = {};
 
-  constructor(private db: AngularFirestore){}
+  constructor(private db: AngularFirestore, private taskService: AppService){}
 
   ngOnInit(): void {
     this.tasks = this.db
@@ -35,5 +39,43 @@ export class AppComponent implements OnInit{
           })
         })        
       );
+  }
+
+  edit(task){
+    console.log(task);
+    this.taskToEdit = task;
+    this.editMode = true;
+    this.myTask = task.description;
+  }
+
+  saveTask(){
+    if(this.myTask!==null){
+      let task = {
+        description: this.myTask
+      };
+    
+      if(!this.editMode){
+        console.log(task);
+        this.taskService.addTask(task);
+      }else{
+        let taskId = this.taskToEdit.id;
+        this.taskService.updateTask(taskId, task);
+      }
+      this.editMode = false;
+      this.myTask = ""
+    }
+  }
+
+  log(x){
+    console.log("hi, i'm printing x");
+    console.log(x);
+  }
+
+  deleteTask(task) {
+
+    //Get the task id 
+    let taskId = task.id; 
+    //delete the task 
+    this.taskService.deleteTask(taskId);
   }
 }
