@@ -35,6 +35,6 @@ export class AppService {
     this.taskDoc = this.db.doc<Task>(`${config.collection_endpoint}/${id}`);
 
     //Delete the document
-    // this.taskDoc.delete();
+    this.taskDoc.delete();
    }
 }

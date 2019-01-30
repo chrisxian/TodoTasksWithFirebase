@@ -20,3 +20,18 @@
     </tr>
   </table>
 </div>
+
+<div>
+  <form #f="ngForm">
+    <div class="form-group">
+      <input [(ngModel)]="myTask" name="myTask" type="text" class="form-control" placeholder="Enter Task Description" required>
+    </div>
+    
+    <div class="form-group">
+      <button class="btn btn-primary" [disabled]="!f.valid" (click)="saveTask()">
+        Save Task
+      </button>
+    </div>
+
+  </form>
+</div>
